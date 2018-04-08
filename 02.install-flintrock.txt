@@ -10,7 +10,6 @@ Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
    $ cd ~/
    $ mkdir -p spark
    $ wget https://github.com/nchammas/flintrock/releases/download/v0.9.0/Flintrock-0.9.0-standalone-Linux-x86_64.zip
-   $ tar xvfz Flintrock-0.9.0-standalone-Linux-x86_64.zip
    $ unzip -q -d flintrock Flintrock-0.9.0-standalone-Linux-x86_64.zip
    $ cd flintrock
    $ ./flintrock --help

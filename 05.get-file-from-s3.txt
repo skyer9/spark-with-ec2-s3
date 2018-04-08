@@ -1,42 +1,42 @@
 
-Spark ¿¡¼­ AWS S3 µ¥ÀÌÅ¸ °¡Á®¿À±â
+Spark ì—ì„œ AWS S3 ë°ì´íƒ€ ê°€ì ¸ì˜¤ê¸°
 
 
 
-pyspark ¸¦ ÀÌ¿ëÇØ S3 ¿¡ ÀúÀåµÇ¾î ÀÖ´Â µ¥ÀÌÅ¸¸¦ °¡Á®¿Â´Ù.
+pyspark ë¥¼ ì´ìš©í•´ S3 ì— ì €ì¥ë˜ì–´ ìˆëŠ” ë°ì´íƒ€ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 
-1. ½ºÆÄÅ© Å¬·¯½ºÅÍ¸¦ »ı¼ºÇÑ´Ù.
+1. ìŠ¤íŒŒí¬ í´ëŸ¬ìŠ¤í„°ë¥¼ ìƒì„±í•œë‹¤.
 
    $ cd ~/spark/flintrock
-   $ ./flintrock launch Å¬·¯½ºÅÍÀÌ¸§
+   $ ./flintrock launch í´ëŸ¬ìŠ¤í„°ì´ë¦„
 
-2. ½ºÆÄÅ© Å¬·¯½ºÅÍ ¸¶½ºÅÍ¿¡ ¾Æ³ªÄÜ´Ù¸¦ ¼³Ä¡ÇÑ´Ù.
+2. ìŠ¤íŒŒí¬ í´ëŸ¬ìŠ¤í„° ë§ˆìŠ¤í„°ì— ì•„ë‚˜ì½˜ë‹¤ë¥¼ ì„¤ì¹˜í•œë‹¤.
 
-   $ ./flintrock login Å¬·¯½ºÅÍÀÌ¸§
+   $ ./flintrock login í´ëŸ¬ìŠ¤í„°ì´ë¦„
    <SparkMaster> $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ sh Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ exit
-   $ ./flintrock login Å¬·¯½ºÅÍÀÌ¸§
+   $ ./flintrock login í´ëŸ¬ìŠ¤í„°ì´ë¦„
 
-3. ½ºÆÄÅ© Å¬·¯½ºÅÍ¿¡ ÀÎÁõÅ°¸¦ µî·ÏÇØÁØ´Ù.
+3. ìŠ¤íŒŒí¬ í´ëŸ¬ìŠ¤í„°ì— ì¸ì¦í‚¤ë¥¼ ë“±ë¡í•´ì¤€ë‹¤.
 
-   AWS ÀÎÁõÅ°¸¦ È¯°æ¼³Á¤¿¡ Ãß°¡ÇÑ´Ù.
+   AWS ì¸ì¦í‚¤ë¥¼ í™˜ê²½ì„¤ì •ì— ì¶”ê°€í•œë‹¤.
 
    <SparkMaster> $ vi ~/.bashrc
    ......
-   export AWS_ACCESS_KEY_ID=¾×¼¼½ºÅ°
-   export AWS_SECRET_ACCESS_KEY=º¸¾È¾×¼¼½ºÅ°
+   export AWS_ACCESS_KEY_ID=ì•¡ì„¸ìŠ¤í‚¤
+   export AWS_SECRET_ACCESS_KEY=ë³´ì•ˆì•¡ì„¸ìŠ¤í‚¤
    export AWS_DEFAULT_REGION=ap-northeast-2
    ......
 
    <SparkMaster> $ exit
-   $ ./flintrock login Å¬·¯½ºÅÍÀÌ¸§
+   $ ./flintrock login í´ëŸ¬ìŠ¤í„°ì´ë¦„
 
-4. pyspark ¸¦ ¼³Ä¡ÇÑ´Ù.
+4. pyspark ë¥¼ ì„¤ì¹˜í•œë‹¤.
 
    <SparkMaster> $ conda install -c conda-forge pyspark
 
-   ³ëÆ®ºÏ¿¡ ¾Æ·¡ ÄÚµå¸¦ ÀÔ·ÂÇÏ°í ½ÇÇàÇØ º»´Ù.
+   ë…¸íŠ¸ë¶ì— ì•„ë˜ ì½”ë“œë¥¼ ì…ë ¥í•˜ê³  ì‹¤í–‰í•´ ë³¸ë‹¤.
 
    --------------------------------------------------------------------------------
    import pyspark
@@ -45,7 +45,7 @@ pyspark ¸¦ ÀÌ¿ëÇØ S3 ¿¡ ÀúÀåµÇ¾î ÀÖ´Â µ¥ÀÌÅ¸¸¦ °¡Á®¿Â´Ù.
    sc.stop()
    --------------------------------------------------------------------------------
 
-5. s3 ¿¡ Á¢¼ÓÇÑ´Ù.
+5. s3 ì— ì ‘ì†í•œë‹¤.
 
    <SparkMaster> $ vi test.py
    --------------------------------------------------------------------------------
@@ -58,8 +58,8 @@ pyspark ¸¦ ÀÌ¿ëÇØ S3 ¿¡ ÀúÀåµÇ¾î ÀÖ´Â µ¥ÀÌÅ¸¸¦ °¡Á®¿Â´Ù.
    hadoopConf.set("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
    hadoopConf.set("fs.s3a.endpoint", 's3.ap-northeast-2.amazonaws.com')
 
-   # È®ÀåÀÚ´Â csv, gz µîÀÌ °¡´ÉÇÏ´Ù.
-   df = sc.textFile("s3a://¹öÅ¶ÀÌ¸§/ÆÄÀÏÀÌ¸§")
+   # í™•ì¥ìëŠ” csv, gz ë“±ì´ ê°€ëŠ¥í•˜ë‹¤.
+   df = sc.textFile("s3a://ë²„í‚·ì´ë¦„/íŒŒì¼ì´ë¦„")
 
    print(df.take(10))
 
@@ -74,11 +74,11 @@ pyspark ¸¦ ÀÌ¿ëÇØ S3 ¿¡ ÀúÀåµÇ¾î ÀÖ´Â µ¥ÀÌÅ¸¸¦ °¡Á®¿Â´Ù.
        --driver-java-options '-Dcom.amazonaws.services.s3.enableV4' \
        test.py
 
-6. spark-submit ·Î±× ·¹º§ º¯°æÇÏ±â
+6. spark-submit ë¡œê·¸ ë ˆë²¨ ë³€ê²½í•˜ê¸°
 
-   ·Î±×°¡ ³Ê¹« ¸¹ÀÌ ÂïÈù´Ù°í »ı°¢ÇÏ¸é ¾Æ·¡ ¹æ½ÄÀ¸·Î ¼öÁ¤ÇÒ ¼ö ÀÖ´Ù.
+   ë¡œê·¸ê°€ ë„ˆë¬´ ë§ì´ ì°íŒë‹¤ê³  ìƒê°í•˜ë©´ ì•„ë˜ ë°©ì‹ìœ¼ë¡œ ìˆ˜ì •í•  ìˆ˜ ìˆë‹¤.
 
    <SparkMaster> $ cp ~/spark/conf/log4j.properties.template ~/spark/conf/log4j.properties
    <SparkMaster> $ vi ~/spark/conf/log4j.properties
 
-   ÆÄÀÏ ³»¿ëÁß INFO ·Î µÇ¾î ÀÖ´Â °ÍÀ» WARN À¸·Î º¯°æÇÑ´Ù.
+   íŒŒì¼ ë‚´ìš©ì¤‘ INFO ë¡œ ë˜ì–´ ìˆëŠ” ê²ƒì„ WARN ìœ¼ë¡œ ë³€ê²½í•œë‹¤.

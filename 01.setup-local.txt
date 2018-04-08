@@ -26,11 +26,14 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
    $ cd ~/
    $ mkdir spark
    $ wget http://mirror.navercorp.com/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
+   $ tar xvfz spark-2.3.0-bin-hadoop2.7.tgz
 
 5. 아나콘다를 설치한다.
 
    $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
    $ sh Anaconda3-4.4.0-Linux-x86_64.sh
+
+   로그아웃 후 재로그인한다.
 
 6. pyspark 를 설치한다.
 
