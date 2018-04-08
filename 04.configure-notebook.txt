@@ -10,12 +10,13 @@ jupyter notebook 을 스파크 클러스터에 설치하고, 브라우저에서 
    $ cd ~/spark/flintrock
    $ ./flintrock launch 클러스터이름
 
-2. 아나콘다를 설치한다.
+2. 스파크 클러스터 마스터에 아나콘다를 설치한다.
 
+   $ ./flintrock login 클러스터이름
    <SparkMaster> $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ sh Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ exit
-   $ ./flintrock launch 클러스터이름
+   $ ./flintrock login 클러스터이름
    <SparkMaster> $ jupyter notebook
 
 3. 노트북을 외부에서 접속하도록 설정하기
