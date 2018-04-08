@@ -1,0 +1,47 @@
+
+Flintrock 상태 확인하기
+
+
+
+생성한 스파크 클러스터에 접속해서 상태를 확인한다.
+
+1. 스파크 클러스터를 생성한다.
+
+   $ cd ~/spark/flintrock
+   $ ./flintrock launch 클러스터이름
+
+   이번에는 생성한 클러스터를 확인해야 하므로 아래 질문이 나오면 n 을 입력한다.
+
+   Do you want to terminate the 2 instances created by this operation? [Y/n]:
+
+2. 간단한 태스크를 실행한다.
+
+   클러스터 마스터노드에 로그인한다.
+
+   $ flintrock login 클러스터이름
+
+   로그인한 클러스터 마스터서버에서 아래 명령을 실행해 스파크쉘을 실행한다.
+
+   <SparkMaster> $ spark-shell
+
+   <SparkMaster> scala> val text = List("Hadoop MapReduce, a disk-based big data processing engine, is being replaced by a new generation of memory-based processing frameworks, the most popular of which is Spark.", "Spark supports Scala, Java, Python, and R.")
+   <SparkMaster> scala> val rdd = sc.parallelize(text)
+   <SparkMaster> scala> val counts = rdd.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+   <SparkMaster> scala> counts.collect()
+
+3. 스파크 클러스터를 종료 및 삭제한다.
+
+   <SparkMaster> scala> :quit
+   <SparkMaster> $ exit
+   $ flintrock destroy 클러스터이름
+
+4. 기타 아래 명령을 이용할 수 있다.
+
+   $ flintrock stop test-cluster
+   $ flintrock start test-cluster
+
+   $ flintrock describe test-cluster
+   $ flintrock add-slaves test-cluster --num-slaves 2
+   $ flintrock remove-slaves test-cluster --num-slaves 1
+   $ flintrock run-command test-cluster 'sudo yum install -y package'
+   $ flintrock copy-file test-cluster /local/path /remote/path

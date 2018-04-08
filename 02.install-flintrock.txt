@@ -1,0 +1,76 @@
+
+Flintrock 설치하기
+
+
+
+Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
+
+1. Flintrock 을 설치한다.
+
+   $ cd ~/
+   $ mkdir -p spark
+   $ wget https://github.com/nchammas/flintrock/releases/download/v0.9.0/Flintrock-0.9.0-standalone-Linux-x86_64.zip
+   $ tar xvfz Flintrock-0.9.0-standalone-Linux-x86_64.zip
+   $ unzip -q -d flintrock Flintrock-0.9.0-standalone-Linux-x86_64.zip
+   $ cd flintrock
+   $ ./flintrock --help
+
+2. flintrock 을 설정한다.
+
+   $ ./flintrock configure
+
+   정상적으로 작동하지 않으면 아래 방식으로 수동으로 수정한다.
+
+   $ vi /home/ec2-user/.config/flintrock/config.yaml
+......
+providers:
+  ec2:
+    key-name: 인증키이름
+    identity-file: /home/ec2-user/인증키이름.pem
+    instance-type: t2.medium
+    region: ap-northeast-2
+    # availability-zone: <name>
+    ami: ami-5e1ab730
+    user: ec2-user
+......
+
+   인증키 권한을 수정한다.
+
+   $ chmod 400 /home/ec2-user/인증키이름.pem
+
+3. AWS 인증키를 환경설정에 등록해 준다.
+
+   $ vi ~/.bashrc
+......
+export AWS_ACCESS_KEY_ID=키아이디
+export AWS_SECRET_ACCESS_KEY=비밀키
+export AWS_DEFAULT_REGION=ap-northeast-2
+......
+
+4. 정상 실행을 확인한다.
+
+   $ ./flintrock launch spark
+
+   Launching 2 instances...
+   [13.124.210.143] SSH online.
+   [13.125.225.51] SSH online.
+   [13.124.210.143] Configuring ephemeral storage...
+   [13.125.225.51] Configuring ephemeral storage...
+   [13.124.210.143] Installing Java 1.8...
+   [13.125.225.51] Installing Java 1.8...
+   [13.125.225.51] Installing Spark...
+   [13.124.210.143] Installing Spark...
+   Do you want to terminate the 2 instances created by this operation? [Y/n]:
+   Terminating instances...
+
+   위에서 바로 종료시킬거냐고 물어보는데 이번에는 정상실행만 확인하기에 Y 를 입력해준다.
+   AWS 콘솔에 들어가면 spark-master, spark-slave 가 종료중인 것을 확인할 수 있다.
+
+5. 보안그룹(Security Group) 확인하기
+
+   보안그룹을 확인해 보면 두개의 그룹이 생성되어 있는 것을 확인할 수 있다.
+   (flintrock-your_cluster_name-cluster, flintrock)
+
+   이중 flintrock 이 외부에서 스파크 클러스터에 접속을 허용하는 보안그룹이다.
+
+   여기에 스파크 클러스터에 접속할 로컬(테스트용) 서버 아이피가 등록되어 있는 것을 확인할 수 있다.

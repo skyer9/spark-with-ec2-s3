@@ -1,0 +1,35 @@
+
+로컬환경 구성하기
+
+
+
+Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 생성합니다.
+
+
+
+1. Amazon Linux AMI 를 생성하고, SSD 용량은 20G 로 합니다.
+
+2. 자바를 업그래이드한다.
+
+   $ sudo yum -y install java-1.8.0
+   $ sudo yum -y remove java-1.7.0-openjdk
+
+3. 파이선 3.x 을 설치한다.
+
+   $ sudo yum list | grep python3
+   $ sudo yum install python36
+
+4. Spark 를 설치한다.
+
+   https://spark.apache.org/downloads.html 에서 다운받아 설치한다.
+
+   $ cd ~/
+   $ mkdir spark
+   $ wget http://mirror.navercorp.com/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
+
+5. 정상 실행되는지 확인한다.
+
+   $ cd spark-2.3.0-bin-hadoop2.7
+   $ ./bin/spark-shell
+
+   정상적으로 실행되면 :quit 을 입력해 종료한다.
