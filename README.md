@@ -9,7 +9,9 @@
 
 - [Flintrock 상태 확인하기](./03.check-status.txt)
 
-- [jupyter notebook 설치하기](./04.configure-notebook.txt)
+- [Jupyter notebook 설치하기](./04.configure-notebook.txt)
+
+- [Spark 에서 AWS S3 데이타 가져오기](./05.get-file-from-s3.txt)
 
 
 
