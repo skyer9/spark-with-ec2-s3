@@ -27,7 +27,32 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
    $ mkdir spark
    $ wget http://mirror.navercorp.com/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
 
-5. 정상 실행되는지 확인한다.
+5. 아나콘다를 설치한다.
+
+   $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
+   $ sh Anaconda3-4.4.0-Linux-x86_64.sh
+
+6. pyspark 를 설치한다.
+
+   $ conda install -c conda-forge pyspark
+
+   $ vi ~/.bashrc
+   ......
+   export SPARK_HOME='/home/ec2-user/spark/spark-2.3.0-bin-hadoop2.7'
+   export PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
+   ......
+
+   추가 jar 파일을 설치한다.
+
+   $ wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.5/hadoop-aws-2.7.5.jar
+   $ cp hadoop-aws-2.7.5.jar ~/spark/spark-2.3.0-bin-hadoop2.7/jars/
+
+   최신 jar 파일 대신 아래 버전을 다운받는다.
+
+   $ wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
+   $ cp aws-java-sdk-1.7.4.jar ~/spark/spark-2.3.0-bin-hadoop2.7/jars/
+
+7. 정상 실행되는지 확인한다.
 
    $ cd spark-2.3.0-bin-hadoop2.7
    $ ./bin/spark-shell
