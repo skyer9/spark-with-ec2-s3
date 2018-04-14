@@ -8,47 +8,36 @@ Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
 1. Flintrock 을 설치한다.
 
    $ cd ~/
-   $ mkdir -p spark
-   $ wget https://github.com/nchammas/flintrock/releases/download/v0.9.0/Flintrock-0.9.0-standalone-Linux-x86_64.zip
-   $ unzip -q -d flintrock Flintrock-0.9.0-standalone-Linux-x86_64.zip
-   $ cd flintrock
-   $ ./flintrock --help
+   $ sudo pip-3.6 install flintrock
+   $ flintrock --help
+   $ flintrock --version
 
 2. flintrock 을 설정한다.
 
-   $ ./flintrock configure
+   $ flintrock configure
 
    정상적으로 작동하지 않으면 아래 방식으로 수동으로 수정한다.
 
    $ vi /home/ec2-user/.config/flintrock/config.yaml
-......
-providers:
-  ec2:
-    key-name: 인증키이름
-    identity-file: /home/ec2-user/인증키이름.pem
-    instance-type: t2.medium
-    region: ap-northeast-2
-    # availability-zone: <name>
-    ami: ami-5e1ab730
-    user: ec2-user
-......
+   ......
+   providers:
+     ec2:
+       key-name: 인증키이름
+       identity-file: /home/ec2-user/인증키이름.pem
+       instance-type: t2.medium
+       region: ap-northeast-2
+       # availability-zone: <name>
+       ami: ami-5e1ab730
+       user: ec2-user
+   ......
 
    인증키 권한을 수정한다.
 
    $ chmod 400 /home/ec2-user/인증키이름.pem
 
-3. AWS 인증키를 환경설정에 등록해 준다.
+3. 정상 실행을 확인한다.
 
-   $ vi ~/.bashrc
-......
-export AWS_ACCESS_KEY_ID=키아이디
-export AWS_SECRET_ACCESS_KEY=비밀키
-export AWS_DEFAULT_REGION=ap-northeast-2
-......
-
-4. 정상 실행을 확인한다.
-
-   $ ./flintrock launch spark
+   $ flintrock launch spark
 
    Launching 2 instances...
    [13.124.210.143] SSH online.
