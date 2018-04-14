@@ -1,18 +1,18 @@
 # spark-with-ec2-s3
 
-ÀÌ ÇÁ·ÎÁ§Æ®´Â ¾Æ¸¶Á¸ AWS ¿¡ EC2 Spark Å¬·¯½ºÅÍ¸¦ »ı¼ºÇÏ´Â ¹æ¹ıÀ» ¼³¸íÇÕ´Ï´Ù.
-»ç¿ëµÇ´Â ÅøÀº [Flintrock](https://github.com/nchammas/flintrock) ÀÔ´Ï´Ù.
+ì´ í”„ë¡œì íŠ¸ëŠ” ì•„ë§ˆì¡´ AWS ì— EC2 Spark í´ëŸ¬ìŠ¤í„°ë¥¼ ìƒì„±í•˜ëŠ” ë°©ë²•ì„ ì„¤ëª…í•©ë‹ˆë‹¤.
+ì‚¬ìš©ë˜ëŠ” íˆ´ì€ [Flintrock](https://github.com/nchammas/flintrock) ì…ë‹ˆë‹¤.
 
-- [·ÎÄÃÈ¯°æ ±¸¼ºÇÏ±â](./01.setup-local.txt)
+- [ë¡œì»¬í™˜ê²½ êµ¬ì„±í•˜ê¸°](./01.setup-local.txt)
 
-- [Flintrock ¼³Ä¡ÇÏ±â](./02.install-flintrock.txt)
+- [Flintrock ì„¤ì¹˜í•˜ê¸°](./02.install-flintrock.txt)
 
-- [Flintrock »óÅÂ È®ÀÎÇÏ±â](./03.check-status.txt)
+- [Flintrock ìƒíƒœ í™•ì¸í•˜ê¸°](./03.check-status.txt)
 
-- [Jupyter notebook ¼³Ä¡ÇÏ±â](./04.configure-notebook.txt)
+- [Jupyter notebook ì„¤ì¹˜í•˜ê¸°](./04.configure-notebook.txt)
 
-- [Spark ¿¡¼­ AWS S3 µ¥ÀÌÅ¸ °¡Á®¿À±â](./05.get-file-from-s3.txt)
+- [Spark ì—ì„œ AWS S3 ë°ì´íƒ€ ê°€ì ¸ì˜¤ê¸°](./05.get-file-from-s3.txt)
 
 
 
-ÂüÁ¶ : https://alexioannides.com/2016/08/18/building-a-data-science-platform-for-rd-part-2-deploying-spark-on-aws-using-flintrock/
+ì°¸ì¡° : https://alexioannides.com/2016/08/18/building-a-data-science-platform-for-rd-part-2-deploying-spark-on-aws-using-flintrock/
