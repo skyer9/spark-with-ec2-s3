@@ -54,7 +54,7 @@ Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
    위에서 바로 종료시킬거냐고 물어보는데 이번에는 정상실행만 확인하기에 Y 를 입력해준다.
    AWS 콘솔에 들어가면 spark-master, spark-slave 가 종료중인 것을 확인할 수 있다.
 
-5. 보안그룹(Security Group) 확인하기
+4. 보안그룹(Security Group) 확인하기
 
    보안그룹을 확인해 보면 두개의 그룹이 생성되어 있는 것을 확인할 수 있다.
    (flintrock-your_cluster_name-cluster, flintrock)
