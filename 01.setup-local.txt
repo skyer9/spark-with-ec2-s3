@@ -9,6 +9,10 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 
 1. Amazon Linux AMI 를 생성하고, SSD 용량은 20G 로 합니다.
 
+   인스턴스가 생성되면 아래 명령을 실행해준다.
+
+   $ sudo yum -y update
+
 2. 자바를 업그래이드한다.
 
    $ sudo yum -y install java-1.8.0
@@ -17,7 +21,8 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 3. 파이선 3.x 을 설치한다.
 
    $ sudo yum list | grep python3
-   $ sudo yum install python36
+   $ sudo yum -y install python36
+   $ python3 -V
 
 4. Spark 를 설치한다.
 
@@ -25,25 +30,33 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 
    $ cd ~/
    $ mkdir spark
+   $ cd spark
    $ wget http://mirror.navercorp.com/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
    $ tar xvfz spark-2.3.0-bin-hadoop2.7.tgz
 
-5. 아나콘다를 설치한다.
+   $ vi ~/.bashrc
+   ......
+   export SPARK_HOME=/home/ec2-user/spark/spark-2.3.0-bin-hadoop2.7
+   export PATH=$SPARK_HOME/bin:$PATH
+   ......
+   $ source ~/.bashrc
 
-   $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
-   $ sh Anaconda3-4.4.0-Linux-x86_64.sh
+   정상 실행되는지 확인한다.
 
-   로그아웃 후 재로그인한다.
+   $ spark-shell
+
+   정상적으로 실행되면 :quit 을 입력해 종료한다.
 
 6. pyspark 를 설치한다.
 
-   $ conda install -c conda-forge pyspark
+   pip3 를 설치한다.
 
-   $ vi ~/.bashrc
-   ......
-   export SPARK_HOME='/home/ec2-user/spark/spark-2.3.0-bin-hadoop2.7'
-   export PATH="$SPARK_HOME/bin:$SPARK_HOME/sbin:$PATH"
-   ......
+   $ sudo yum -y install python36-setuptools
+   $ sudo easy_install-3.6 pip
+
+   pyspark 를 설치한다.
+
+   $ sudo pip-3.6 install pyspark --no-cache-dir
 
    추가 jar 파일을 설치한다.
 
@@ -55,9 +68,50 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
    $ wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
    $ cp aws-java-sdk-1.7.4.jar ~/spark/spark-2.3.0-bin-hadoop2.7/jars/
 
-7. 정상 실행되는지 확인한다.
+7. jupyter nootbook 을 설치한다.
 
-   $ cd spark-2.3.0-bin-hadoop2.7
-   $ ./bin/spark-shell
+   $ sudo pip-3.6 install jupyter
 
-   정상적으로 실행되면 :quit 을 입력해 종료한다.
+   정상적으로 실행되는지 확인한다.
+
+   $ jupyter notebook
+
+8. 노트북을 외부에서 접속 가능하도록 수정한다.
+
+   설정파일을 수정한다.
+
+   $ jupyter notebook --generate-config
+
+   아래 명령으로 외부에서 접속 가능하도록 수정한다.
+   (!!!!!! 아래 명령은 모든 아이피에서 접속가능하도록 설정한다. 방화벽 등 기타 다른 방법으로 접속을 제한해야 한다. !!!!!!)
+
+   $ vi /home/ec2-user/.jupyter/jupyter_notebook_config.py
+   ......
+   c.NotebookApp.ip = '*'
+   ......
+
+   AWS 콘솔에서 SparkMaster 인스턴스 보안그룹에 접속할 아이피(PC 아이피) 및 포트(8888) 를 열어준다.
+
+   아래 명령을 실행한다.
+
+   $ jupyter notebook
+
+   브라우저에서 확인한다.
+
+   http://<로컬서버 아이피>:8888/?token=91fb1aa750ade184a9c04335f20694cfb37a2a971bd3a
+
+9. 노트북을 백그라운드에서 실행하도록 한다.
+
+   $ nohup jupyter notebook &
+   $ cat nohup.out
+
+10. 정상작동을 확인한다.
+
+   노트북에 아래 코드를 입력하고 실행한다.
+   에러없이 실행되면, pyspark 가 정상작동함을 확인할 수 있다.
+
+   --------------------------------------------------------------------------------
+   import pyspark
+   sc = pyspark.SparkContext.getOrCreate()
+   sc.stop()
+   --------------------------------------------------------------------------------
