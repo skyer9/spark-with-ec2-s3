@@ -72,6 +72,14 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 
    $ sudo pip-3.6 install jupyter
 
+   $ vi ~/.bashrc
+   ......
+   export PYSPARK_PYTHON=/usr/bin/python3
+   export PYSPARK_DRIVER_PYTHON=ipython3
+   export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+   ......
+   $ source ~/.bashrc
+
    정상적으로 실행되는지 확인한다.
 
    $ jupyter notebook
