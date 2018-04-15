@@ -5,9 +5,7 @@
 
 Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 생성합니다.
 
-
-
-1. Amazon Linux AMI 를 생성하고, SSD 용량은 20G 로 합니다.
+1. Amazon Linux AMI 를 생성하고, 인스턴스 유형은 t2.medium, SSD 용량은 20G 로 합니다.
 
    인스턴스가 생성되면 아래 명령을 실행해준다.
 
@@ -56,17 +54,7 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 
    pyspark 를 설치한다.
 
-   $ sudo pip-3.6 install pyspark --no-cache-dir
-
-   추가 jar 파일을 설치한다.
-
-   $ wget http://central.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.5/hadoop-aws-2.7.5.jar
-   $ cp hadoop-aws-2.7.5.jar ~/spark/spark-2.3.0-bin-hadoop2.7/jars/
-
-   최신 jar 파일 대신 아래 버전을 다운받는다.
-
-   $ wget http://central.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
-   $ cp aws-java-sdk-1.7.4.jar ~/spark/spark-2.3.0-bin-hadoop2.7/jars/
+   $ sudo pip-3.6 install pyspark
 
 7. jupyter nootbook 을 설치한다.
 
