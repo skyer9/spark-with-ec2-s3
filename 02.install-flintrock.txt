@@ -14,22 +14,47 @@ Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
 
 2. flintrock 을 설정한다.
 
+   로컬서버에 설치된 스파크 버전을 확인한다.
+
+   $ spark-submit --version
+
+   로컬서버에 설치된 스파크의 버전과 스파크 클러스터에 설치된 스파크의 버전이 동일하지 않으면 에러가 발생한다.
+
    $ flintrock configure
 
    정상적으로 작동하지 않으면 아래 방식으로 수동으로 수정한다.
 
    $ vi /home/ec2-user/.config/flintrock/config.yaml
-   ......
-   providers:
-     ec2:
-       key-name: 인증키이름
-       identity-file: /home/ec2-user/인증키이름.pem
-       instance-type: t2.medium
-       region: ap-northeast-2
-       # availability-zone: <name>
-       ami: ami-5e1ab730
-       user: ec2-user
-   ......
+   ----------------------------------------------------------------------------
+services:
+  spark:
+    version: 2.3.0
+    download-source: "http://mirror.navercorp.com/apache/spark/spark-{v}/spark-{v}-bin-hadoop2.7.tgz"
+  hdfs:
+    version: 2.7.5
+    download-source: "http://mirror.navercorp.com/apache/hadoop/common/hadoop-{v}/hadoop-{v}.tar.gz"
+
+provider: ec2
+
+providers:
+  ec2:
+    key-name: 인증키이름
+    identity-file: /home/ec2-user/인증키이름.pem
+    instance-type: t2.medium
+    region: ap-northeast-2
+    ami: ami-5e1ab730
+    user: ec2-user
+    tenancy: default  # default | dedicated
+    ebs-optimized: no  # yes | no
+    instance-initiated-shutdown-behavior: terminate  # terminate | stop
+
+launch:
+  num-slaves: 1
+  install-hdfs: True
+  install-spark: True
+
+debug: false
+   ----------------------------------------------------------------------------
 
    인증키 권한을 수정한다.
 
