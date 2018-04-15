@@ -7,7 +7,6 @@ Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
 
 1. Flintrock 을 설치한다.
 
-   $ cd ~/
    $ sudo pip-3.6 install flintrock
    $ flintrock --help
    $ flintrock --version
