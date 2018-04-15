@@ -7,7 +7,7 @@ Flintrock 상태 확인하기
 
 1. 스파크 클러스터를 생성한다.
 
-   $ flintrock launch 클러스터이름
+   $ flintrock launch spark
 
    이번에는 생성한 클러스터를 확인해야 하므로 아래 질문이 나오면 n 을 입력한다.
 
@@ -15,7 +15,7 @@ Flintrock 상태 확인하기
 
 2. 클러스터를 실행한다.
 
-   $ flintrock login 클러스터이름
+   $ flintrock login spark
 
    로컬서버와 스파크 클러스터에 설치된 스파크의 버전이 동일한지 확인한다.
 
@@ -63,11 +63,22 @@ Flintrock 상태 확인하기
 
    $ spark-submit --master spark://sparki:7077 test.py
 
-5. 스파크 클러스터를 종료 및 삭제한다.
+5. 노트북에서 클러스터를 호출한다.
 
-   $ flintrock destroy 클러스터이름
+   ----------------------------------------------------------------------------
+   from pyspark import SparkConf, SparkContext
+   conf = SparkConf()
+   conf.setMaster('spark://sparki:7077')
+   conf.setAppName("simpleApp")
+   sc = SparkContext(conf = conf)
+   sc.stop()
+   ----------------------------------------------------------------------------
 
-6. 기타 아래 명령을 이용할 수 있다.
+6. 스파크 클러스터를 종료 및 삭제한다.
+
+   $ flintrock destroy spark
+
+7. 기타 아래 명령을 이용할 수 있다.
 
    $ flintrock stop test-cluster
    $ flintrock start test-cluster
