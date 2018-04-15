@@ -1,0 +1,54 @@
+
+Spark 클러스터에서 HDFS 접근하기
+
+
+
+생성한 스파크 클러스터에서 하둡 파일시스템에 접속하는 것을 확인한다.
+
+1. 스파크 클러스터를 실행한다.
+
+   스파크 클러스터를 생성한다.
+
+   $ flintrock launch spark
+   $ flintrock run-command spark 'sudo mkdir -p /media/root/hadoop/dfs/name'
+   $ flintrock run-command spark 'sudo chown -R ec2-user:ec2-user /media'
+
+   스파크 클러스터를 시작한다.
+
+   $ flintrock login spark
+   <SparkMaster> $ spark/sbin/start-all.sh
+
+2. 하둡 파일시스템을 실행한다.
+
+   아래 명령으로 하둡파일시스템을 초기화한다.
+   (!!!!!! 하둡 파일시스템에 파일이 존재한다면 모두 삭제된다. !!!!!!)
+
+   <SparkMaster> $ hadoop/bin/hdfs namenode -format
+
+   <SparkMaster> $ hadoop/sbin/start-dfs.sh
+
+3. HDFS 에 파일을 복사해 넣는다.
+
+   <SparkMaster> $ hadoop fs -copyFromLocal /home/ec2-user/hadoop/logs/*.out /
+   <SparkMaster> $ hdfs dfs -ls /
+   <SparkMaster> $ hdfs dfsadmin -report
+
+4. HDFS 시스템에 접근하여 파일을 읽어온다.
+
+   <SparkMaster> $ vi test.py
+   ----------------------------------------------------------------------------
+   from pyspark import SparkConf, SparkContext
+   conf = SparkConf()
+   conf.setMaster('spark://<마스터노드 내부 아이피>:7077')
+   conf.setAppName("simpleApp")
+   sc = SparkContext(conf = conf)
+   df = sc.textFile("hdfs:///*.out")
+   print(df.take(10))
+   sc.stop()
+   ----------------------------------------------------------------------------
+
+   $ spark-submit test.py
+
+4. HDFS 를 종료한다.
+
+   <SparkMaster> $ hadoop/sbin/stop-dfs.sh
