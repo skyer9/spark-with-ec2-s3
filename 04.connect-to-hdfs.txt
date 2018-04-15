@@ -49,6 +49,10 @@ Spark 클러스터에서 HDFS 접근하기
 
    $ spark-submit test.py
 
-4. HDFS 를 종료한다.
+5. HDFS 를 종료한다.
 
    <SparkMaster> $ hadoop/sbin/stop-dfs.sh
+
+6. 스파크 클러스터를 종료 및 삭제한다.
+
+   $ flintrock destroy spark
