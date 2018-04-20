@@ -8,16 +8,25 @@ pyspark 를 이용해 S3 에 저장되어 있는 데이타를 가져온다.
 1. 스파크 클러스터를 생성한다.
 
    $ flintrock launch spark
-
-2. 스파크 클러스터 마스터에 아나콘다를 설치한다.
-
    $ flintrock login spark
-   <SparkMaster> $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
-   <SparkMaster> $ sh Anaconda3-4.4.0-Linux-x86_64.sh
-   <SparkMaster> $ exit
-   $ ./flintrock login 클러스터이름
 
-3. 스파크 클러스터에 인증키를 등록해준다.
+2. 파이선 3.x 을 설치한다.
+
+   <SparkMaster> $ sudo yum -y install python36
+   <SparkMaster> $ python3 -V
+
+3. pyspark 를 설치한다.
+
+   pip3 를 설치한다.
+
+   <SparkMaster> $ sudo yum -y install python36-setuptools
+   <SparkMaster> $ sudo easy_install-3.6 pip
+
+   pyspark 를 설치한다.
+
+   <SparkMaster> $ sudo pip-3.6 install pyspark
+
+4. 스파크 클러스터에 인증키를 등록해준다.
 
    AWS 인증키를 환경설정에 추가한다.
 
@@ -28,26 +37,13 @@ pyspark 를 이용해 S3 에 저장되어 있는 데이타를 가져온다.
    export AWS_DEFAULT_REGION=ap-northeast-2
    ......
 
-   <SparkMaster> $ exit
-   $ ./flintrock login 클러스터이름
-
-4. pyspark 를 설치한다.
-
-   <SparkMaster> $ conda install -c conda-forge pyspark
-
-   노트북에 아래 코드를 입력하고 실행해 본다.
-
-   --------------------------------------------------------------------------------
-   import pyspark
-   sc = pyspark.SparkContext.getOrCreate()
-
-   sc.stop()
-   --------------------------------------------------------------------------------
+   <SparkMaster> $ source ~/.bashrc
 
 5. s3 에 접속한다.
 
    <SparkMaster> $ vi test.py
    --------------------------------------------------------------------------------
+   # -*- coding: utf-8 -*-
    import pyspark
 
    sc = pyspark.SparkContext.getOrCreate()
@@ -60,24 +56,16 @@ pyspark 를 이용해 S3 에 저장되어 있는 데이타를 가져온다.
    # 확장자는 csv, gz 등이 가능하다.
    df = sc.textFile("s3a://버킷이름/파일이름")
 
+   print('\n\n------------------------------------------------\n\n')
    print(df.take(10))
+   print('\n\n------------------------------------------------\n\n')
 
    sc.stop()
    --------------------------------------------------------------------------------
 
-   <SparkMaster> $ spark-submit \
-       --conf spark.hadoop.fs.s3n.impl=org.apache.hadoop.fs.s3native.NativeS3FileSystem \
-       --conf spark.hadoop.fs.s3.impl=org.apache.hadoop.fs.s3.S3FileSystem \
-       --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
-       --packages org.apache.hadoop:hadoop-aws:2.7.3 \
-       --driver-java-options '-Dcom.amazonaws.services.s3.enableV4' \
-       test.py
+   <SparkMaster> $ spark-submit test.py
 
-6. spark-submit 로그 레벨 변경하기
+6. 스파크 클러스터를 종료 및 삭제한다.
 
-   로그가 너무 많이 찍힌다고 생각하면 아래 방식으로 수정할 수 있다.
-
-   <SparkMaster> $ cp ~/spark/conf/log4j.properties.template ~/spark/conf/log4j.properties
-   <SparkMaster> $ vi ~/spark/conf/log4j.properties
-
-   파일 내용중 INFO 로 되어 있는 것을 WARN 으로 변경한다.
+   <SparkMaster> $ exit
+   $ flintrock destroy spark
