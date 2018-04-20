@@ -30,7 +30,7 @@ services:
     version: 2.3.0
     download-source: "http://mirror.navercorp.com/apache/spark/spark-{v}/spark-{v}-bin-hadoop2.7.tgz"
   hdfs:
-    version: 2.7.5
+    version: 2.7.6
     download-source: "http://mirror.navercorp.com/apache/hadoop/common/hadoop-{v}/hadoop-{v}.tar.gz"
 
 provider: ec2
