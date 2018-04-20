@@ -8,22 +8,28 @@ Flintrock 상태 확인하기
 1. 스파크 클러스터를 생성한다.
 
    $ flintrock launch spark
+   Launching 2 instances...
+   [13.125.251.50] SSH online.
+   [13.209.21.240] SSH online.
+   [13.209.21.240] Configuring ephemeral storage...
+   [13.125.251.50] Configuring ephemeral storage...
+   [13.125.251.50] Installing Java 1.8...
+   [13.209.21.240] Installing Java 1.8...
+   [13.125.251.50] Installing HDFS...
+   [13.209.21.240] Installing HDFS...
+   [13.125.251.50] Installing Spark...
+   [13.209.21.240] Installing Spark...
+   [172.31.17.187] Configuring HDFS master...
+   [172.31.17.187] Configuring Spark master...
+   HDFS online.
+   Spark online.
+   launch finished in 0:01:44.
+   Cluster master: ec2-13-209-21-240.ap-northeast-2.compute.amazonaws.com
+   Login with: flintrock login spark
 
-   이번에는 생성한 클러스터를 확인해야 하므로 아래 질문이 나오면 n 을 입력한다.
+   스파크 클러스터와 하둡 클러스터가 실행된 것을 확인할 수 있다.
 
-   Do you want to terminate the 2 instances created by this operation? [Y/n]:
-
-2. 클러스터를 실행한다.
-
-   $ flintrock login spark
-
-   로컬서버와 스파크 클러스터에 설치된 스파크의 버전이 동일한지 확인한다.
-
-   <SparkMaster> $ spark-submit --version
-
-   클러스터를 시작한다.
-
-   <SparkMaster> $ spark/sbin/start-all.sh
+2. 스파크 클러스터 작동상태를 확인한다.
 
    AWS 콘솔에서 마스터노드에 등록된 보안그룹 중 flintrock 으로 등록된 것에,
    브라우저를 실행할 아이피(ex PC 아이피) 에 대해 8080-8081 포트를 열도록 등록해준다.
@@ -31,27 +37,7 @@ Flintrock 상태 확인하기
 
    http://<마스터 노드 퍼블릭 아이피>:8080/
 
-3. 로컬서버에서 스파크 클러스터를 실행한다.
-
-   로컬서버로 이동한다.
-
-   <SparkMaster> $ exit
-
-   AWS 콘솔에서 마스터노드에 등록된 보안그룹 중 flintrock 으로 등록된 것에,
-   로컬서버 내부아이피로부터의 7077 포트 접속허용을 등록해준다.
-
-   $ vi test.py
-   ----------------------------------------------------------------------------
-   import pyspark
-   sc = pyspark.SparkContext.getOrCreate()
-   sc.stop()
-   ----------------------------------------------------------------------------
-
-   로컬서버에서 아래 명령을 실행한다.
-
-   $ spark-submit --master spark://<마스터노드의 내부 아이피>:7077 test.py
-
-4. 마스터노드의 내부 아이피를 등록한다.
+3. 마스터노드의 내부 아이피를 등록한다.
 
    스파크 클러스터를 삭제 후 재생성하게 되면 내부 아이피가 변경된다.
    이를 대비해 내부 아이피를 hosts 파일에 등록해 두면 편하다.
@@ -61,9 +47,30 @@ Flintrock 상태 확인하기
    <마스터노드의 내부 아이피>   sparki
    ......
 
-   $ spark-submit --master spark://sparki:7077 test.py
+4. 로컬서버에서 스파크 클러스터를 실행한다.
+
+   로컬서버에서 아래 명령을 실행한다.
+
+   $ vi test.py
+   ----------------------------------------------------------------------------
+   from pyspark import SparkConf, SparkContext
+   conf = SparkConf()
+   conf.setMaster('spark://sparki:7077')
+   conf.setAppName("simpleApp")
+   sc = SparkContext(conf = conf)
+   sc.stop()
+   ----------------------------------------------------------------------------
+
+   $ spark-submit test.py
 
 5. 노트북에서 클러스터를 호출한다.
+
+   노트북이 실행중이 아니면 아래 명령으로 노트북을 실행한다.
+
+   $ nohup jupyter notebook &
+   $ cat nohup.out
+
+   노트북에 아래 코드를 입력해 실행할 수 있다.
 
    ----------------------------------------------------------------------------
    from pyspark import SparkConf, SparkContext
