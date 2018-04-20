@@ -85,6 +85,8 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
    ......
    c.NotebookApp.ip = '*'
    ......
+   c.NotebookApp.port = 8888
+   ......
 
    AWS 콘솔에서 SparkMaster 인스턴스 보안그룹에 접속할 아이피(PC 아이피) 및 포트(8888) 를 열어준다.
 
@@ -94,9 +96,9 @@ Spark 서버 클러스터를 생성하기 전에 로컬(테스트용) 서버를 
 
    브라우저에서 확인한다.
 
-   http://<로컬서버 아이피>:8888/?token=91fb1aa750ade184a9c04335f20694cfb37a2a971bd3a
+   http://<PC 아이피>:8888/?token=91fb1aa750ade184a9c04335f20694cfb37a2a971bd3a
 
-9. 노트북을 백그라운드에서 실행하도록 한다.
+9. 아래 명령으로 노트북을 백그라운드에서 실행할 수 있다.
 
    $ nohup jupyter notebook &
    $ cat nohup.out
