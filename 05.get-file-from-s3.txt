@@ -11,7 +11,7 @@ pyspark 를 이용해 S3 에 저장되어 있는 데이타를 가져온다.
 
 2. 스파크 클러스터 마스터에 아나콘다를 설치한다.
 
-   $ ./flintrock login 클러스터이름
+   $ flintrock login spark
    <SparkMaster> $ wget https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ sh Anaconda3-4.4.0-Linux-x86_64.sh
    <SparkMaster> $ exit
