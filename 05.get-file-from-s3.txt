@@ -17,6 +17,7 @@ pyspark 를 이용해 S3 에 저장되어 있는 데이타를 가져온다.
    <SparkMaster> $ exit
    $ ./flintrock login 클러스터이름
 
+
 3. 스파크 클러스터에 인증키를 등록해준다.
 
    AWS 인증키를 환경설정에 추가한다.
