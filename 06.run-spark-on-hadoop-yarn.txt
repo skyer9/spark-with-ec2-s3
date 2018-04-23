@@ -59,9 +59,10 @@ HADOOP YARN 위에서 스파크 실행하기
                $SPARK_HOME/examples/jars/spark-examples_2.11-2.3.0.jar 10
 
    스파크를 클러스터 모드로 실행시키려면 아래와 같이 명령을 입력하면 된다.
+   (포트는 6066 이다.)
 
    <SparkMaster> $ spark-submit --deploy-mode cluster \
-               --master spark://<스파크 클러스터 마스터노드의 내부아이피>:7077 \
+               --master spark://<스파크 클러스터 마스터노드의 내부아이피>:6066 \
                --executor-memory 512M \
                --driver-memory 512M \
                --executor-cores 1 \
