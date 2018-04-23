@@ -8,6 +8,13 @@ Spark 클러스터에서 HDFS 접근하기
 1. 스파크 클러스터를 생성한다.
 
    $ flintrock launch spark
+
+   스파크 클러스터 전체에 python 3.x 를 설치한다.
+
+   $ flintrock run-command spark 'sudo yum -y install python36'
+
+   스파크 클러스터 마스터에 로그인한다.
+
    $ flintrock login spark
 
 2. HDFS 에 파일을 복사해 넣는다.
@@ -31,6 +38,14 @@ Spark 클러스터에서 HDFS 접근하기
    pyspark 를 설치한다.
 
    <SparkMaster> $ sudo pip-3.6 install pyspark
+
+   $ vi ~/.bashrc
+   ......
+   export PYSPARK_PYTHON=/usr/bin/python3
+   export PYSPARK_DRIVER_PYTHON=ipython3
+   export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+   ......
+   $ source ~/.bashrc
 
 4. HDFS 시스템에 접근하여 파일을 읽어온다.
 
