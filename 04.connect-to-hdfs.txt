@@ -23,12 +23,7 @@ Spark 클러스터에서 HDFS 접근하기
    <SparkMaster> $ hdfs dfs -ls /
    <SparkMaster> $ hdfs dfsadmin -report
 
-3. 파이선 3.x 을 설치한다.
-
-   <SparkMaster> $ sudo yum -y install python36
-   <SparkMaster> $ python3 -V
-
-4. pyspark 를 설치한다.
+3. pyspark 를 설치한다.
 
    pip3 를 설치한다.
 
