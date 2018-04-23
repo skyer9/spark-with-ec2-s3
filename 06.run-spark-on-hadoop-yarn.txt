@@ -69,6 +69,17 @@ HADOOP YARN 위에서 스파크 실행하기
                --class org.apache.spark.examples.SparkPi \
                $SPARK_HOME/examples/jars/spark-examples_2.11-2.3.0.jar 10
 
+   로컬 서버에서도 스파크 클러스터 모드를 호출할 수 있다.
+
+   <SparkMaster> $ exit
+   $ spark-submit --deploy-mode cluster \
+               --master spark://<스파크 클러스터 마스터노드의 내부아이피>:6066 \
+               --executor-memory 512M \
+               --driver-memory 512M \
+               --executor-cores 1 \
+               --class org.apache.spark.examples.SparkPi \
+               /home/ec2-user/spark/examples/jars/spark-examples_2.11-2.3.0.jar 10
+
 5. 하둡 yarn 을 종료한다.
 
    <SparkMaster> $ hadoop/sbin/stop-yarn.sh
