@@ -1,0 +1,73 @@
+
+HADOOP YARN 위에서 스파크 실행하기
+
+
+
+1. 기초환경 구성하기
+
+   "Spark 클러스터에서 HDFS 접근하기" 문서에 있는 3번까지의 내용을 실행한다.
+
+2. yarn 을 설정한다.
+
+   <SparkMaster> $ cd ~/
+   <SparkMaster> $ cp hadoop/etc/hadoop/mapred-site.xml.template hadoop/conf/mapred-site.xml
+
+   <SparkMaster> $ vi hadoop/conf/mapred-site.xml
+   ----------------------------------------------------------------------------
+   <configuration>
+       <property>
+               <name>mapreduce.framework.name</name>
+               <value>yarn</value>
+       </property>
+   </configuration>
+   ----------------------------------------------------------------------------
+
+   <SparkMaster> $ cp hadoop/etc/hadoop/yarn-site.xml hadoop/conf/yarn-site.xml
+   <SparkMaster> $ vi hadoop/conf/yarn-site.xml
+   ----------------------------------------------------------------------------
+   <configuration>
+       <property>
+               <name>yarn.acl.enable</name>
+               <value>0</value>
+       </property>
+
+       <property>
+               <name>yarn.resourcemanager.hostname</name>
+               <value><마스터 노드 퍼블릭 DNS></value>
+       </property>
+
+       <property>
+               <name>yarn.nodemanager.aux-services</name>
+               <value>mapreduce_shuffle</value>
+       </property>
+   </configuration>
+   ----------------------------------------------------------------------------
+
+   <SparkMaster> $ cp hadoop/etc/hadoop/hadoop-metrics2.properties hadoop/conf/hadoop-metrics2.properties
+   <SparkMaster> $ cp hadoop/etc/hadoop/capacity-scheduler.xml hadoop/conf/capacity-scheduler.xml
+
+3. 하둡 yarn 을 실행한다.
+
+   <SparkMaster> $ hadoop/sbin/start-yarn.sh
+
+4. 스파크를 실행한다.
+
+   스파크를 클라이언트 모드로 실행시키려면 아래와 같이 명령을 입력하면 된다.
+
+   <SparkMaster> $ spark-submit --deploy-mode client \
+               --class org.apache.spark.examples.SparkPi \
+               $SPARK_HOME/examples/jars/spark-examples_2.11-2.3.0.jar 10
+
+   스파크를 클러스터 모드로 실행시키려면 아래와 같이 명령을 입력하면 된다.
+
+   <SparkMaster> $ spark-submit --deploy-mode cluster \
+               --master spark://<스파크 클러스터 마스터노드의 내부아이피>:7077 \
+               --executor-memory 512M \
+               --driver-memory 512M \
+               --executor-cores 1 \
+               --class org.apache.spark.examples.SparkPi \
+               $SPARK_HOME/examples/jars/spark-examples_2.11-2.3.0.jar 10
+
+5. 하둡 yarn 을 종료한다.
+
+   <SparkMaster> $ hadoop/sbin/stop-yarn.sh
