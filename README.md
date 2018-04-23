@@ -18,3 +18,7 @@
 
 
 참조 : https://alexioannides.com/2016/08/18/building-a-data-science-platform-for-rd-part-2-deploying-spark-on-aws-using-flintrock/
+
+참조 : https://linode.com/docs/databases/hadoop/how-to-install-and-set-up-hadoop-cluster/
+
+참조 : https://linode.com/docs/databases/hadoop/install-configure-run-spark-on-top-of-hadoop-yarn-cluster/
