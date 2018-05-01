@@ -3,7 +3,7 @@
 이 프로젝트는 아마존 AWS 에 EC2 Spark 클러스터를 생성하는 방법을 설명합니다.
 사용되는 툴은 [Flintrock](https://github.com/nchammas/flintrock) 입니다.
 
-- [로컬환경 구성하기](./01.setup-local.txt)
+- [로컬환경 구성하기](./setup-local-server.md)
 
 - [Flintrock 설치하기](./02.install-flintrock.txt)
 
