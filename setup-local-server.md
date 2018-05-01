@@ -217,9 +217,3 @@ export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native:$LD_LIBRARY_PATH
 ......
 $ source ~/.bashrc
 ```
-
-```sh
-```
-
-```sh
-```
