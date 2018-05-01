@@ -12,7 +12,7 @@ Amazon Linux AMI 를 생성하고, 인스턴스 유형은 t2.medium, SSD 용량�
 sudo yum -y update
 ```
 
-## 2. 자바 업그래이드하기
+## 2. 자바 업그레이드하기
 
 ```sh
 sudo yum -y install java-1.8.0
