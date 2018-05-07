@@ -13,6 +13,8 @@
 
 - [Spark 에서 AWS S3 데이타 가져오기](./05.get-file-from-s3.txt)
 
+- [Spark 에서 AWS S3 데이타 가져오기(With Scala)](./get-file-from-s3-with-scala.md)
+
 - [HADOOP YARN 위에서 스파크 실행하기](./06.run-spark-on-hadoop-yarn.txt)
 
 참조 : [https://alexioannides.com/2016/08/18/building-a-data-science-platform-for-rd-part-2-deploying-spark-on-aws-using-flintrock/](https://alexioannides.com/2016/08/18/building-a-data-science-platform-for-rd-part-2-deploying-spark-on-aws-using-flintrock/)
