@@ -5,7 +5,7 @@
 
 - [로컬환경 구성하기](./setup-local-server.md)
 
-- [Flintrock 설치하기](./02.install-flintrock.txt)
+- [Flintrock 설치하기](./install-flintrock.md)
 
 - [Flintrock 상태 확인하기](./03.check-status.txt)
 

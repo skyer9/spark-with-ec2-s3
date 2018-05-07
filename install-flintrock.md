@@ -1,0 +1,97 @@
+# Flintrock 설치하기
+
+Flintrock 을 설치하고 정상적으로 작동하는지 확인한다.
+
+## 1. Flintrock 설치하기
+
+```sh
+sudo pip-3.6 install flintrock
+flintrock --version
+```
+
+## 2. flintrock 설정하기
+
+로컬서버에 설치된 스파크 버전을 확인한다. 로컬서버에 설치된 스파크의 버전과 스파크 클러스터에 설치된 스파크의 버전이 동일하지 않으면 에러가 발생한다.
+
+```sh
+spark-submit --version
+```
+
+```sh
+flintrock configure
+```
+
+정상적으로 작동하지 않으면 아래 방식으로 수동으로 수정한다.
+
+```sh
+$ vi /home/ec2-user/.config/flintrock/config.yaml
+-----------------------------------------------------------
+services:
+  spark:
+    version: 2.3.0
+    download-source: "http://mirror.navercorp.com/apache/spark/spark-{v}/spark-{v}-bin-hadoop2.7.tgz"
+  hdfs:
+    version: 2.7.6
+    download-source: "http://mirror.navercorp.com/apache/hadoop/common/hadoop-{v}/hadoop-{v}.tar.gz"
+
+provider: ec2
+
+providers:
+  ec2:
+    key-name: 인증키이름
+    identity-file: /home/ec2-user/인증키이름.pem
+    instance-type: t2.medium
+    region: ap-northeast-2
+    ami: ami-5e1ab730
+    user: ec2-user
+    tenancy: default  # default | dedicated
+    ebs-optimized: no  # yes | no
+    instance-initiated-shutdown-behavior: terminate  # terminate | stop
+
+launch:
+  num-slaves: 1
+  install-hdfs: True
+  install-spark: True
+
+debug: false
+----------------------------------------------------------------------------
+```
+
+인증키 권한을 수정한다.
+
+```sh
+chmod 400 /home/ec2-user/인증키이름.pem
+```
+
+## 3. 정상 실행 확인하기
+
+```sh
+$ flintrock launch spark
+
+Launching 2 instances...
+[13.124.210.143] SSH online.
+[13.125.225.51] SSH online.
+[13.124.210.143] Configuring ephemeral storage...
+[13.125.225.51] Configuring ephemeral storage...
+[13.124.210.143] Installing Java 1.8...
+[13.125.225.51] Installing Java 1.8...
+[13.125.225.51] Installing Spark...
+[13.124.210.143] Installing Spark...
+Do you want to terminate the 2 instances created by this operation? [Y/n]:
+```
+
+위에서 바로 종료시킬거냐고 물어보는데 이번에는 정상실행만 확인하기에 Y 를 입력해준다.
+AWS 콘솔에 들어가면 spark-master, spark-slave 가 종료중인 것을 확인할 수 있다.
+
+## 4. 보안그룹(Security Group) 확인하기
+
+보안그룹을 확인해 보면 두개의 그룹이 생성되어 있는 것을 확인할 수 있다.
+(flintrock-your_cluster_name-cluster, flintrock)
+
+이중 flintrock 이 외부에서 스파크 클러스터에 접속을 허용하는 보안그룹이다.
+
+여기에 스파크 클러스터에 접속할 로컬(테스트용) 서버 아이피가 등록되어 있는 것을 확인할 수 있다.
+
+## 5. 로컬 서버에 대한 방화벽 오픈
+
+**flintrock 보안 그룹에 로컬서버 내부 아이피에 대해 0-65535 포트를 오픈해준다.**
