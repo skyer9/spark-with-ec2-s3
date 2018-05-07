@@ -43,9 +43,9 @@ object Main {
         sc.hadoopConfiguration.set("com.amazonaws.services.s3.enableV4", "true")
         sc.hadoopConfiguration.set("fs.s3a.endpoint", "s3." + region + ".amazonaws.com")
 
-        val rdd = sc.textFile("s3a://tenbyten-weblog-seoul/20180430/www*-www-*.gz")
+        val rdd = sc.textFile("s3a://버킷이름/파일이름")
                     .take(10)
-                    .foreach(_ => println _)
+                    .foreach(line => println(line))
 
         sc.stop()
     }
