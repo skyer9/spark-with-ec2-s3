@@ -79,7 +79,7 @@ spark-submit --class Main --master local target/scala-2.11/MyProject-assembly-0.
 # 클러스터의 모든 노드에 jar 파일을 복사한다.
 $ flintrock copy-file spark target/scala-2.11/MyProject-assembly-0.1.jar ./
 
-클러스터 마스터 노드에서 실행한다.
+# 클러스터 마스터 노드에서 실행한다.
 $ flintrock login spark
 <SparkMaster> $ spark-submit --deploy-mode cluster \
     --master spark://<스파크 클러스터 마스터 노드 내부아이피>:6066 \
