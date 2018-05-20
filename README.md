@@ -32,3 +32,7 @@
 ## HADOOP YARN 구성하기
 
 - [HADOOP YARN 위에서 스파크 실행하기](./06.run-spark-on-hadoop-yarn.txt)
+
+## Jupyter Scala 설치하기
+
+- [Jupyter Notebook 에서 Scala 실행하기](./run-scala-on-jupyter-notebook.md)
