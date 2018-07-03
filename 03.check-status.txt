@@ -26,6 +26,7 @@ Flintrock 상태 확인하기
    launch finished in 0:01:44.
    Cluster master: ec2-13-209-21-240.ap-northeast-2.compute.amazonaws.com
    Login with: flintrock login spark
+   # $ flintrock add-slaves spark --num-slaves 2
 
    스파크 클러스터와 하둡 클러스터가 실행된 것을 확인할 수 있다.
 

@@ -70,23 +70,42 @@ libraryDependencies ++= Seq(
 
 ```sh
 sbt assembly
-spark-submit --class Main --master local target/scala-2.11/MyProject-assembly-0.1.jar
+spark-submit --class Main \
+    --master local \
+    --jars $HADOOP_HOME/share/hadoop/tools/lib/aws-java-sdk-1.7.4.jar,$HADOOP_HOME/share/hadoop/tools/lib/hadoop-aws-2.7.6.jar \
+    target/scala-2.11/MyProject-assembly-0.1.jar
 ```
 
-## 4. 스파크 클러스터에서 실행하기
+## 4. 스파크 클러스터에서 원격으로 실행하기
+
+### 4.1. (옵션) HDFS 을 포맷하기
 
 ```sh
-# 클러스터의 모든 노드에 jar 파일을 복사한다.
-$ flintrock copy-file spark target/scala-2.11/MyProject-assembly-0.1.jar ./
+flintrock login spark
+hadoop namenode -format
+exit
+```
 
-# 클러스터 마스터 노드에서 실행한다.
-$ flintrock login spark
-<SparkMaster> $ spark-submit --deploy-mode cluster \
-    --master spark://<스파크 클러스터 마스터 노드 내부아이피>:6066 \
-    --jars /home/ec2-user/.ivy2/cache/com.amazonaws/aws-java-sdk/jars/aws-java-sdk-1.7.4.jar,/home/ec2-user/.ivy2/cache/org.apache.hadoop/hadoop-aws/jars/hadoop-aws-2.7.6.jar \
+### 4.2. HDFS 에 jar 파일 전송하기
+
+```sh
+# hdfs dfs -rm -r hdfs://sparki:9000/test/
+hdfs dfs -mkdir hdfs://sparki:9000/test/
+hadoop fs -cp file:///home/ec2-user/test_prj/target/scala-2.11/MyProject-assembly-0.1.jar hdfs://sparki:9000/test/
+hadoop fs -cp file:///home/ec2-user/hadoop/hadoop-2.7.6/share/hadoop/tools/lib/aws-java-sdk-1.7.4.jar hdfs://sparki:9000/test/
+hadoop fs -cp file:///home/ec2-user/hadoop/hadoop-2.7.6/share/hadoop/tools/lib/hadoop-aws-2.7.6.jar hdfs://sparki:9000/test/
+hdfs dfs -ls hdfs://sparki:9000/test/
+```
+
+## 4.3. 스파크 클러스터에서 실행하기
+
+```sh
+spark-submit --deploy-mode cluster \
+    --master spark://sparki:6066 \
+    --jars hdfs://sparki:9000/test/aws-java-sdk-1.7.4.jar,hdfs://sparki:9000/test/hadoop-aws-2.7.6.jar \
     --executor-memory 512M \
     --driver-memory 512M \
-    --executor-cores 1 \
+    --executor-cores 2 \
     --conf spark.hadoop.fs.s3a.endpoint=s3.ap-northeast-2.amazonaws.com \
     --conf spark.hadoop.fs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
     --conf spark.executor.extraJavaOptions=-Dcom.amazonaws.services.s3.enableV4=true \
@@ -94,5 +113,5 @@ $ flintrock login spark
     --conf spark.hadoop.fs.s3a.access.key=<AWS 액세스키> \
     --conf spark.hadoop.fs.s3a.secret.key=<AWS 보안키> \
     --class Main \
-    MyProject-assembly-0.1.jar
+    hdfs://sparki:9000/test/MyProject-assembly-0.1.jar
 ```
