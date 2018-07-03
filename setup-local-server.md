@@ -15,6 +15,7 @@ sudo yum -y update
 ## 2. 자바 업그레이드하기
 
 ```sh
+java -version
 sudo yum -y install java-1.8.0
 sudo yum -y remove java-1.7.0-openjdk
 ```
@@ -22,7 +23,7 @@ sudo yum -y remove java-1.7.0-openjdk
 ## 2. 파이선 3.x 을 설치하기
 
 ```sh
-sudo yum list | grep python3
+sudo yum list installed | grep python3
 sudo yum -y install python36
 python3 -V
 ```
@@ -204,6 +205,7 @@ mkdir hadoop
 cd hadoop
 wget http://mirror.navercorp.com/apache/hadoop/common/hadoop-2.7.6/hadoop-2.7.6.tar.gz
 tar xvfz hadoop-2.7.6.tar.gz
+rm hadoop-2.7.6.tar.gz
 ```
 
 환경설정을 수정한다.
