@@ -101,8 +101,8 @@ hdfs dfs -ls hdfs://sparki:9000/test/
 
 ```sh
 spark-submit --deploy-mode cluster \
-    --master spark://sparki:6066 \
-    --jars hdfs://sparki:9000/test/aws-java-sdk-1.7.4.jar,hdfs://sparki:9000/test/hadoop-aws-2.7.6.jar \
+    --master spark://<스파크 클러스터 마스터 노드 내부아이피>:6066 \
+    --jars hdfs://<스파크 클러스터 마스터 노드 내부아이피>:9000/test/aws-java-sdk-1.7.4.jar,hdfs://<스파크 클러스터 마스터 노드 내부아이피>:9000/test/hadoop-aws-2.7.6.jar \
     --executor-memory 512M \
     --driver-memory 512M \
     --executor-cores 2 \
@@ -113,5 +113,5 @@ spark-submit --deploy-mode cluster \
     --conf spark.hadoop.fs.s3a.access.key=<AWS 액세스키> \
     --conf spark.hadoop.fs.s3a.secret.key=<AWS 보안키> \
     --class Main \
-    hdfs://sparki:9000/test/MyProject-assembly-0.1.jar
+    hdfs://<스파크 클러스터 마스터 노드 내부아이피>:9000/test/MyProject-assembly-0.1.jar
 ```
