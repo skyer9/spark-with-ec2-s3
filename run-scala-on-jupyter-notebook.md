@@ -75,7 +75,7 @@ Writing default config to: /home/ec2-user/.jupyter/jupyter_notebook_config.py
 ```
 
 아래 명령으로 외부에서 접속 가능하도록 수정한다.
-(!!!!!! 아래 명령은 모든 아이피에서 접속가능하도록 설정한다. 방화벽 등 기타 다른 방법으로 접속을 제한해야 한다. !!!!!!)
+(**아래 명령은 모든 아이피에서 접속가능하도록 설정한다. 방화벽 등 기타 다른 방법으로 접속을 제한해야 한다.**)
 
 ```sh
 $ vi /home/ec2-user/.jupyter/jupyter_notebook_config.py
